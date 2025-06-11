@@ -1,7 +1,6 @@
 import React from 'react';
 import { Post } from '@/lib/types'
 import PostCard from '@/components/PostCard';
-import { SearchParamsContext } from 'next/dist/shared/lib/hooks-client-context.shared-runtime';
 import Link from 'next/link';
 
 interface PostsPageProps {
