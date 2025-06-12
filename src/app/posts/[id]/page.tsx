@@ -1,7 +1,8 @@
 import { Post } from "@/lib/types";
-import { Comment } from "@/lib/types";
 import { notFound } from "next/navigation";
+import { Comment } from "@/lib/types"
 import Link from "next/link";
+import CommentCard from "@/components/CommentCard";
 
 interface PostPageProps {
     params: {
@@ -17,7 +18,7 @@ async function getPost(id: string): Promise<Post | null> {
 
 async function getComments(postId: string): Promise<Comment[]> {
     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
-    if (!res.ok) return null;
+    if (!res.ok) throw new Error("Failed to fetch");
     return res.json();
 }
 
@@ -48,10 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 ): (
                     <ul className="space-y-4 mt-4">
                         {comments.map((comment) => (
-                            <li key={comment.id} className="border rounded p-4 bg-gray-50">
-                                <p className="font-semibold text-sm">{comment.name} <span>({comment.email})</span></p>
-                                <p className="text-gray-700 mt-1">{comment.body}</p>
-                            </li>
+                            <CommentCard key={comment.id} comment={comment} />
                         ))}
                     </ul>
                 )}
